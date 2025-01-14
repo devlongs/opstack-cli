@@ -43,3 +43,44 @@ func CheckoutBranch(clonePath, branch string) error {
 	cmd.Stderr = os.Stderr
 	return cmd.Run()
 }
+
+func BuildOptimism() error {
+	homeDir, _ := os.UserHomeDir()
+	optDir := filepath.Join(homeDir, "optimism")
+
+	// 1. pnpm install
+	cmd := exec.Command("pnpm", "install")
+	cmd.Dir = optDir
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	if err := cmd.Run(); err != nil {
+		return err
+	}
+
+	// 2. make op-node op-batcher op-proposer
+	cmd = exec.Command("make", "op-node", "op-batcher", "op-proposer")
+	cmd.Dir = optDir
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	if err := cmd.Run(); err != nil {
+		return err
+	}
+
+	// 3. pnpm build
+	cmd = exec.Command("pnpm", "build")
+	cmd.Dir = optDir
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	return cmd.Run()
+}
+
+func BuildOpGeth() error {
+	homeDir, _ := os.UserHomeDir()
+	gethDir := filepath.Join(homeDir, "op-geth")
+
+	cmd := exec.Command("make", "geth")
+	cmd.Dir = gethDir
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	return cmd.Run()
+}
