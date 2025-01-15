@@ -8,7 +8,6 @@ import (
 )
 
 func CloneRepo(folderName, repoURL, branch string) error {
-	// e.g. cd ~ or user-specified
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
 		return err
