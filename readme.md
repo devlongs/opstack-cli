@@ -9,7 +9,7 @@ OP Stack CLI is a command-line utility for easily spinning up an OP Stack–base
 opstack-cli init
 ```
 
-2. Build the OP Stack binaries
+2. Build the OP Stack binary
 ```bash
 opstack-cli build
 ```
